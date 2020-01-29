@@ -17,26 +17,26 @@ public class Calc {
 
     private BigDecimal expSum() {
         String op;
-        BigDecimal ris;
+        BigDecimal result;
 
-        ris = expProduct();
+        result = expProduct();
         while (true) {
             op = head(gsFormula);
             if ("+".equals(op)) {
                 gsFormula = tail(gsFormula);
-                ris = ris.add(expProduct());
+                result = result.add(expProduct());
             } else if ("-".equals(op)) {
                 gsFormula = tail(gsFormula);
-                ris = ris.subtract(expProduct());
+                result = result.subtract(expProduct());
             } else {
                 break;
             }
         }
-        return ris;
+        return result;
     }
 
     private BigDecimal expNumber() {
-        BigDecimal ris = BigDecimal.ZERO;
+        BigDecimal result = BigDecimal.ZERO;
         String number = "";
         String functionName = "";
         BigDecimal functionArgument = BigDecimal.ZERO;
@@ -49,13 +49,13 @@ public class Calc {
                     number += head(gsFormula);
                     gsFormula = tail(gsFormula);
                 } else {
-                    ris = new BigDecimal(number);
+                    result = new BigDecimal(number);
                     break;
                 }
             }
         } else if (c.equals("(")) {
             gsFormula = tail(gsFormula);
-            ris = expSum();
+            result = expSum();
             if (!")".equals(head(gsFormula))) {
                 throw new IllegalArgumentException();
             } else {
@@ -74,13 +74,13 @@ public class Calc {
                         throw new IllegalArgumentException();
                     } else {
                         gsFormula = tail(gsFormula);
-                        ris = evaluateFunction(functionName, functionArgument);
+                        result = evaluateFunction(functionName, functionArgument);
                         break;
                     }
                 }
             }
         }
-        return ris;
+        return result;
     }
 
     private BigDecimal evaluateFunction(String functionName, BigDecimal functionArgument) {
@@ -107,30 +107,30 @@ public class Calc {
 
     private BigDecimal expProduct() {
         String op;
-        BigDecimal ris;
+        BigDecimal result;
         BigDecimal num = BigDecimal.ZERO;
 
-        ris = expNumber();
+        result = expNumber();
         while (true) {
             op = head(gsFormula);
             if ("*".equals(op)) {
                 gsFormula = tail(gsFormula);
-                ris = ris.multiply(expNumber());
+                result = result.multiply(expNumber());
             } else if ("/".equals(op)) {
                 gsFormula = tail(gsFormula);
                 try {
                     num = expNumber();
-                    ris = ris.divide(num);
+                    result = result.divide(num);
                 } catch (ArithmeticException e) {
                     if (e.getMessage().startsWith("Non-terminating")) {
-                        ris = ris.divide(num, MathContext.DECIMAL128);
+                        result = result.divide(num, MathContext.DECIMAL128);
                     } else throw e;
                 }
             } else {
                 break;
             }
         }
-        return ris;
+        return result;
     }
 
     private String head(String s) {
