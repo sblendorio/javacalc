@@ -2,10 +2,9 @@ package eu.sblendorio.javacalc;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.channels.IllegalSelectorException;
 
 public class Calc {
-    String gsFormula;
+    private String gsFormula;
 
     public static BigDecimal eval(String expr) {
         return new Calc(expr.replace(" ", "")).expSum();
@@ -101,7 +100,7 @@ public class Calc {
         } else if ("abs".equalsIgnoreCase(functionName)) {
             return functionArgument.abs();
         } else {
-            throw new IllegalSelectorException();
+            throw new IllegalArgumentException();
         }
     }
 
@@ -124,7 +123,9 @@ public class Calc {
                 } catch (ArithmeticException e) {
                     if (e.getMessage().startsWith("Non-terminating")) {
                         result = result.divide(num, MathContext.DECIMAL128);
-                    } else throw e;
+                    } else {
+                        throw e;
+                    }
                 }
             } else {
                 break;
