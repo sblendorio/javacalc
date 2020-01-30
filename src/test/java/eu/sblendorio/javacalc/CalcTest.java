@@ -24,11 +24,11 @@ public class CalcTest {
         Map<String, Number> vars = new HashMap<>();
 
         vars.put("a", 2);
-        vars.put("b", 3.5);
+        vars.put("b", 16);
 
         assertEquals(
-                new BigDecimal(5.5),
-                Calc.eval("a+b", vars)
+                new BigDecimal(10),
+                Calc.eval("a + sqrt(b) * 2", vars)
         );
     }
 }
