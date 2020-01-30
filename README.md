@@ -18,5 +18,5 @@
     vars.put("x", 9);
     vars.put("y", 12.5);
     
-    BigDecimal result = Calc.eval("x + y*2");
+    BigDecimal result = Calc.eval("x + y*2", vars);
  
