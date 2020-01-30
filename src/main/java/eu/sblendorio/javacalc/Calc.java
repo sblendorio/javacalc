@@ -1,17 +1,26 @@
 package eu.sblendorio.javacalc;
 
+import static java.util.Collections.emptyMap;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Map;
 
 public class Calc {
     private String gsFormula;
+    private Map<String, BigDecimal> varspace;
 
     public static BigDecimal eval(String expr) {
-        return new Calc(expr.replace(" ", "")).expSum();
+        return new Calc(expr, emptyMap()).expSum();
     }
 
-    private Calc(String formula) {
-        this.gsFormula = formula == null ? "" : formula;
+    public static BigDecimal eval(String expr, Map<String, BigDecimal> varspace) {
+        return new Calc(expr, varspace).expSum();
+    }
+
+    private Calc(String formula, Map<String, BigDecimal> varspace) {
+        this.varspace = varspace == null ? emptyMap() : varspace;
+        this.gsFormula = formula == null ? "" : formula.replace(" ", "");
     }
 
     private BigDecimal expSum() {
@@ -37,7 +46,7 @@ public class Calc {
     private BigDecimal expNumber() {
         BigDecimal result = BigDecimal.ZERO;
         String number = "";
-        String functionName = "";
+        String identifier = "";
         BigDecimal functionArgument = BigDecimal.ZERO;
 
         String c = head(gsFormula);
@@ -64,7 +73,7 @@ public class Calc {
             while (true) {
                 c = head(gsFormula);
                 if (c.matches("[a-zA-Z]")) {
-                    functionName += head(gsFormula);
+                    identifier += head(gsFormula);
                     gsFormula = tail(gsFormula);
                 } else if (c.equals("(")) {
                     gsFormula = tail(gsFormula);
@@ -73,7 +82,14 @@ public class Calc {
                         throw new IllegalArgumentException();
                     } else {
                         gsFormula = tail(gsFormula);
-                        result = evaluateFunction(functionName, functionArgument);
+                        result = evaluateFunction(identifier, functionArgument);
+                        break;
+                    }
+                } else {
+                    result = varspace.get(identifier);
+                    if (result == null) {
+                        throw new IllegalArgumentException("Undefined variable '" + identifier + "'");
+                    } else {
                         break;
                     }
                 }
