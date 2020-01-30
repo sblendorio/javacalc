@@ -1,10 +1,14 @@
 package eu.sblendorio.javacalc;
 
 import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toMap;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Calc {
     private String gsFormula;
@@ -14,13 +18,19 @@ public class Calc {
         return new Calc(expr, emptyMap()).expSum();
     }
 
-    public static BigDecimal eval(String expr, Map<String, BigDecimal> varspace) {
+    public static BigDecimal eval(String expr, Map<String, ? extends Number> varspace) {
         return new Calc(expr, varspace).expSum();
     }
 
-    private Calc(String formula, Map<String, BigDecimal> varspace) {
-        this.varspace = varspace == null ? emptyMap() : varspace;
-        this.gsFormula = formula == null ? "" : formula.replace(" ", "");
+    private Calc(String formula, Map<String, ? extends Number> vars) {
+        Objects.nonNull(vars);
+        Objects.nonNull(formula);
+
+        varspace = vars.entrySet().stream()
+                .collect(toMap(Map.Entry::getKey, item ->new BigDecimal(item.getValue().toString())));
+
+        this.gsFormula = formula.replace(" ", "");
+
     }
 
     private BigDecimal expSum() {

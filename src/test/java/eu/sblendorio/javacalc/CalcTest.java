@@ -21,13 +21,13 @@ public class CalcTest {
 
     @Test
     public void shouldComputeCalculationWithVariables() {
-        Map<String, BigDecimal> vars = new HashMap<>();
+        Map<String, Number> vars = new HashMap<>();
 
-        vars.put("a", new BigDecimal(2));
-        vars.put("b", new BigDecimal(3));
+        vars.put("a", 2);
+        vars.put("b", 3.5);
 
         assertEquals(
-                new BigDecimal(5),
+                new BigDecimal(5.5),
                 Calc.eval("a+b", vars)
         );
     }
