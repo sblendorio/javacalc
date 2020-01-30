@@ -31,4 +31,5 @@ public class CalcTest {
                 Calc.eval("a + sqrt(b) * 2", vars)
         );
     }
+
 }

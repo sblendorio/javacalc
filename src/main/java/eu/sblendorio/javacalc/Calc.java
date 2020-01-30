@@ -75,7 +75,7 @@ public class Calc {
             gsFormula = tail(gsFormula);
             result = expSum();
             if (!")".equals(head(gsFormula))) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Syntax error");
             } else {
                 gsFormula = tail(gsFormula);
             }
@@ -89,7 +89,7 @@ public class Calc {
                     gsFormula = tail(gsFormula);
                     functionArgument = expSum();
                     if (!")".equals(head(gsFormula))) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalArgumentException("Syntax error");
                     } else {
                         gsFormula = tail(gsFormula);
                         result = evaluateFunction(identifier, functionArgument);
@@ -123,10 +123,12 @@ public class Calc {
             return new BigDecimal(Math.acos(functionArgument.doubleValue()));
         } else if ("atan".equalsIgnoreCase(functionName)) {
             return new BigDecimal(Math.atan(functionArgument.doubleValue()));
+        } else if ("sgn".equalsIgnoreCase(functionName)) {
+            return new BigDecimal(Math.signum(functionArgument.doubleValue()));
         } else if ("abs".equalsIgnoreCase(functionName)) {
             return functionArgument.abs();
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Undefined function '" + functionName + "'");
         }
     }
 
