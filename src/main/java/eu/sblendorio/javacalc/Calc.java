@@ -124,7 +124,7 @@ public class Calc {
         } else if ("atan".equalsIgnoreCase(functionName)) {
             return new BigDecimal(Math.atan(functionArgument.doubleValue()));
         } else if ("sgn".equalsIgnoreCase(functionName)) {
-            return new BigDecimal(Math.signum(functionArgument.doubleValue()));
+            return new BigDecimal(functionArgument.signum());
         } else if ("abs".equalsIgnoreCase(functionName)) {
             return functionArgument.abs();
         } else {

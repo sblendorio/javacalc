@@ -20,3 +20,13 @@
     
     BigDecimal result = Calc.eval("x + y*2", vars);
  
+## Available math functions
+- `sqrt(x)`: square root of `x`
+- `sin(x)`: sine of `x` radiants
+- `cos(x)`: cosine of `x` radiants
+- `tan(x)`: tangent of `x` radiants
+- `asin(x)`: arcsine of `x`
+- `acos(x)`: arccosine of `x`
+- `atan(x)`: arctangent of `x`
+- `sgn(x)`: signum of `x` (positive: 1, negative: -1, otherwise 0)
+- `abs(x)`: absolute value of `x`
