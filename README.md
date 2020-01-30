@@ -3,7 +3,7 @@
 **JavaCalc** is a *recursive descendant parser* that evaluates math expression, including a bunch of math functions and with *variables* support.
 
 ## Type system
-**JavaCalc** uses **`java.math.BigDecimal`** as main type, in order not to lose precision during calculation.
+**JavaCalc** uses `java.math.BigDecimal` as main type, in order not to lose precision during calculation.
 
 ## Usage examples
 
